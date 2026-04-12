@@ -1,18 +1,24 @@
 import { useEffect, useState, useRef } from "react";
 import { SiJavascript, SiTypescript, SiReact, SiTailwindcss, SiNodedotjs, SiFlutter } from 'react-icons/si';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faGithub, faItchIo, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+
 import leftHeroImage from './assets/images/left-hero.png';
 import midHeroImage from './assets/images/mid-hero.png';
 import rightHeroImage from './assets/images/right-hero.png';
 
 import nameText from './assets/images/name.png';
-import logoImage from './assets/images/logo.png';
+import logoImage from './assets/images/logo-nav.png';
 import heroTitleText from './assets/images/hero-title.png';
 import heroTitleTextMobile from './assets/images/hero-title-mobile.png';
 
 import aboutText from './assets/images/about-me.png';
 import contactsText from './assets/images/contacts.png';
 import proficiencyText from './assets/images/proficiency.png';
+
+import boatsImage from './assets/images/boats.png';
 
 
 
@@ -33,7 +39,7 @@ interface Artwork {
 }
 
 
-// Reusable Card component
+
 function Card({ image, title, subtitle }: CardProps) {
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden flex flex-col">
@@ -45,6 +51,7 @@ function Card({ image, title, subtitle }: CardProps) {
     </div>
   );
 }
+
 
 // Main App
 export default function App() {
@@ -109,7 +116,7 @@ export default function App() {
 
   const projects: CardProps[] = [
     { image: "https://via.placeholder.com/400x200", title: "Mobile App One", subtitle: "A mobile app project.", category: "Mobile App" },
-    { image: "https://via.placeholder.com/400x200", title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: boatsImage, title: "Website One", subtitle: "A website project.", category: "Website" },
     { image: "https://via.placeholder.com/400x200", title: "Game One", subtitle: "A video game project.", category: "Video Game" },
   ];
 
@@ -139,9 +146,9 @@ export default function App() {
         <div className="flex justify-between items-center px-8 py-4 md:py-5  bg-white shadow">
 
           <img src={nameText} className="h-4 xl:h-6 w-auto object-contain hidden md:block"/>
-          <img src={logoImage} className="h-10 w-auto object-contain md:hidden py-0"/>
+          <img src={logoImage} className="h-6 w-auto object-contain md:hidden py-0"/>
           
-          <div className="flex gap-6 text-[#1a1a1a] md:text-base lg:text-lg tracking-wide font-cal">
+          <div className="flex gap-6 text-[#3d3d3d] md:text-base lg:text-lg tracking-wide font-cal">
             {["home", "about", "projects", "artwork"].map(section => (
               <p
                 key={section}
@@ -171,7 +178,7 @@ export default function App() {
       {/* HERO */}
       <div ref={heroRef} className="flex flex-col items-center justify-center mb-8">
 
-        <div className="text-center h-70 flex items-center justify-end flex-col">
+        <div className="text-center h-70 flex items-center justify-end flex-col animate-fadeUp">
           {/* Desktop Image */}
           <img src={heroTitleText} className="w-10/12 object-cover hidden md:block"/>
 
@@ -199,37 +206,87 @@ export default function App() {
 
 
       {/* ABOUT */}
-      <div ref={aboutRef} className="flex flex-col px-4 sm:px-8 md:px-16 py-16 md:py-20 gap-10">
-        <div className="flex flex-col md:flex-row gap-10">
+      <div ref={aboutRef} className="flex flex-col px-4 sm:px-8 md:px-16 py-16 md:py-20 gap-8">
+        <div className="flex flex-col md:flex-row gap-8">
           
           {/* ABOUT TEXT */}
           <div className="md:w-5/8 flex flex-col justify-start p-4 md:p-8">
-            <img src={aboutText}  className="h-12 w-auto object-contain block self-start mb-6"/>
+            <img src={aboutText}  className="h-12 w-auto object-contain block self-start mb-8"/>
 
-            <p className="text-[#1a1a1a] font-nunito text-[clamp(1.1rem,2vw,1.25rem)]" style={{lineHeight: '2.2rem'}}>
+            <p className="text-[#3d3d3d] font-nunito text-[clamp(1.1rem,2vw,1.25rem)] mb-4" style={{lineHeight: '2.2rem'}}>
               Sean Kierby Concepcion is a BS Computer Science graduate of UP Los Baños with experience 
               in mobile and full-stack web development, highlighted by his work as a Mobile App Developer 
               at BAJ Pharmaceuticals, contributions to a nationwide project (NOAH), and hands-on experience 
               delivering freelance projects. 
+            </p>
+
+            <p className="text-[#3d3d3d] font-nunito text-[clamp(1.1rem,2vw,1.25rem)]" style={{lineHeight: '2.2rem'}}>
+              Most of his work revolves around mobile applications, full-stack websites, basic robotics programming & building, and 2D video game development.
             </p>
           </div>
 
 
           {/* CONTACTS */}
           <div className="md:w-3/8 flex flex-col justify-start p-4 md:p-8">
-            <img src={contactsText} className="h-12 w-auto object-contain block self-start mb-6"/>
+            <img src={contactsText} className="h-12 w-auto object-contain block self-start mb-8"/>
 
-            <p className="text-[#1a1a1a] mb-2 font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">📧 sean@example.com</p>
-            <p className="text-[#1a1a1a] mb-2 font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">📱 +63 912 345 6789</p>
-            <p className="text-[#1a1a1a] mb-2 font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">💼 LinkedIn</p>
-            <p className="text-[#1a1a1a] font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">🐙 GitHub</p>
+            {/* EMAIL */}
+            <a
+              href="mailto:sean@example.com"
+              className="flex items-center gap-3 text-[#3d3d3d] mb-3 font-nunito hover:scale-102 transition-transform text-[clamp(1.1rem,2vw,1.25rem)]"
+            >
+              <FontAwesomeIcon icon={faEnvelope} style={{fontSize: '1.8rem'}} />
+              <span className="font-bold w-24 ms-2">Email</span>
+              <span className="">skiconcepcion@gmail.com</span>
+            </a>
+
+            {/* PHONE */}
+            <a
+              href="tel:+639123456789"
+              className="flex items-center gap-3 text-[#3d3d3d] mb-3 font-nunito hover:scale-102 transition-transform  text-[clamp(1.1rem,2vw,1.25rem)]"
+            >
+              <FontAwesomeIcon icon={faPhone} style={{fontSize: '1.8rem'}} />
+              <span className="font-bold w-24 ms-2">Phone</span>
+              <span className="">09682677916</span>
+            </a>
+
+            {/* LINKEDIN */}
+            <a
+              href="#" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-3 text-[#3d3d3d] mb-3 font-nunito hover:scale-102 transition-transform  text-[clamp(1.1rem,2vw,1.25rem)]"
+            >
+              <FontAwesomeIcon icon={faLinkedin} style={{fontSize: '1.8rem'}} />
+              <span className="font-bold w-24 ms-2">LinkedIn</span>
+              <span className="">Sean Concepcion</span>
+            </a>
+
+            {/* GITHUB */}
+            <a
+              href="#" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-3 text-[#3d3d3d] mb-3 font-nunito hover:scale-102 transition-transform  text-[clamp(1.1rem,2vw,1.25rem)]"
+            >
+              <FontAwesomeIcon icon={faGithub} style={{fontSize: '1.8rem'}}/>
+              <span className="font-bold w-24 ms-2">Github</span>
+              <span className="">skiconcepcion</span>
+            </a>
+
+            {/* ITCH IO */}
+            <a
+              href="#" target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-3 text-[#3d3d3d] font-nunito hover:scale-102 transition-transform  text-[clamp(1.1rem,2vw,1.25rem)]"
+            >
+              <FontAwesomeIcon icon={faItchIo} style={{fontSize: '1.8rem'}}/>
+              <span className="font-bold w-24 ms-2">Itch.io</span>
+              <span className="">skiconcepcion.itch.io</span>
+            </a>
+
           </div>
         </div>
 
 
         {/* PROFICIENCY */}
         <div className="flex flex-col justify-start p-4 md:p-8">
-          <img src={proficiencyText} className="h-12 w-auto object-contain block self-start mb-6"/>
+          <img src={proficiencyText} className="h-15 w-auto object-contain block self-start mb-8"/>
 
           <div className="flex flex-wrap gap-6">
             <SiJavascript className="text-yellow-400 w-12 h-12 hover:scale-110 transition-transform" />
@@ -246,7 +303,7 @@ export default function App() {
 
 
       {/* PROJECTS */}
-      <div ref={projectsRef} className="px-10 py-20 flex flex-col gap-10">
+      <div ref={projectsRef} className="px-10 py-20 flex flex-col gap-10 bg-gray-50">
         <h2 className="text-4xl font-bold text-center">My Work</h2>
 
         <div className="flex justify-center gap-6 mt-4">
@@ -269,8 +326,12 @@ export default function App() {
         </div>
       </div>
 
+
+
+
+
       {/* ARTWORK */}
-      <div ref={artworkRef} className="px-10 py-20 flex flex-col gap-10 bg-gray-50">
+      <div ref={artworkRef} className="px-10 py-20 flex flex-col gap-10">
         <h2 className="text-4xl font-bold text-center">Artwork</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
