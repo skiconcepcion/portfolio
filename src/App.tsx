@@ -1,20 +1,35 @@
 import { useEffect, useState, useRef } from "react";
 import { SiJavascript, SiTypescript, SiReact, SiTailwindcss, SiNodedotjs, SiFlutter } from 'react-icons/si';
 
+import leftHeroImage from './assets/images/left-hero.png';
+import midHeroImage from './assets/images/mid-hero.png';
+import rightHeroImage from './assets/images/right-hero.png';
+
+import nameText from './assets/images/name.png';
+import logoImage from './assets/images/logo.png';
+import heroTitleText from './assets/images/hero-title.png';
+import heroTitleTextMobile from './assets/images/hero-title-mobile.png';
+
+import aboutText from './assets/images/about-me.png';
+import contactsText from './assets/images/contacts.png';
+import proficiencyText from './assets/images/proficiency.png';
+
+
+
 // Card props interface
 interface CardProps {
   image: string;
   title: string;
   subtitle: string;
-  category?: string; // optional for artwork images
+  category?: string;
 }
 
 // Artwork image interface
 interface Artwork {
   src: string;
   title?: string;
-  colSpan?: number; // default 1
-  rowSpan?: number; // default 1
+  colSpan?: number;
+  rowSpan?: number;
 }
 
 
@@ -33,30 +48,65 @@ function Card({ image, title, subtitle }: CardProps) {
 
 // Main App
 export default function App() {
-  const [showNav, setShowNav] = useState(false);
-  const [activeTab, setActiveTab] = useState("All"); // Project filter tab
-  const [activeSection, setActiveSection] = useState("Home"); // Navbar highlight
+  const [showNav, setShowNav] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeTab, setActiveTab] = useState("All");
+  const [activeSection, setActiveSection] = useState("home");
+  const [isClickScrolling, setIsClickScrolling] = useState(false);
 
-  // Refs for scrolling
   const heroRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const artworkRef = useRef<HTMLDivElement>(null);
 
-  // Handle scroll for navbar transparency
-  useEffect(() => {
-    const handleScroll = () => setShowNav(window.scrollY > 100);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Smooth scroll to section
-  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>, name: string) => {
-    setActiveSection(name);
-    ref.current?.scrollIntoView({ behavior: "smooth" });
+  const navColors: Record<string, string> = {
+    home: "text-[#6BDEEC]",
+    about: "text-[#C5DFAB]",
+    projects:"text-[#FECE54]",
+    artwork: "text-[#F477A0]",
   };
 
-  // Sample projects with categories
+  // 🔥 Scroll direction logic
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isClickScrolling) return; // 🚫 ignore scroll during click
+
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        setShowNav(false);
+      } else {
+        setShowNav(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY, isClickScrolling]);
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement | null>, name: string) => {
+    setActiveSection(name);
+    setIsClickScrolling(true);
+
+    ref.current?.scrollIntoView({ behavior: "smooth" });
+
+    // 👇 Detect when scrolling actually stops
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const handleScrollEnd = () => {
+      clearTimeout(timeout);
+
+      timeout = setTimeout(() => {
+        setIsClickScrolling(false); // ✅ only when scrolling REALLY stops
+        window.removeEventListener("scroll", handleScrollEnd);
+      }, 120); // small delay after last scroll event
+    };
+
+    window.addEventListener("scroll", handleScrollEnd);
+  };
+
   const projects: CardProps[] = [
     { image: "https://via.placeholder.com/400x200", title: "Mobile App One", subtitle: "A mobile app project.", category: "Mobile App" },
     { image: "https://via.placeholder.com/400x200", title: "Website One", subtitle: "A website project.", category: "Website" },
@@ -67,7 +117,6 @@ export default function App() {
     ? projects
     : projects.filter(p => p.category === activeTab);
 
-  // Sample artwork images
   const artworkImages: Artwork[] = [
     { src: "https://via.placeholder.com/600x400", colSpan: 2, rowSpan: 3 },
     { src: "https://via.placeholder.com/400x400", colSpan: 1, rowSpan: 1 },
@@ -76,27 +125,39 @@ export default function App() {
     { src: "https://via.placeholder.com/600x600", colSpan: 2, rowSpan: 2 },
     { src: "https://via.placeholder.com/500x400", colSpan: 1, rowSpan: 1 },
   ];
-  
+
   const tabs = ["All", "Mobile App", "Website", "Video Game"];
 
   return (
     <div className="min-h-screen bg-white font-sans">
 
       {/* NAVBAR */}
-      <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${showNav ? "bg-white shadow opacity-100" : "bg-transparent opacity-0"}`}>
-        <div className="flex justify-between items-center px-10 py-4 bg-white shadow">
-          <h1 className="font-bold text-lg" style={{ fontFamily: 'Nunito' }}>seanconcepcion</h1>
-          <div className="flex gap-6 text-gray-600">
-            {["Home", "About", "Projects", "Artwork"].map(section => (
+      <div
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
+        ${showNav ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
+      >
+        <div className="flex justify-between items-center px-8 py-4 md:py-5  bg-white shadow">
+
+          <img src={nameText} className="h-4 xl:h-6 w-auto object-contain hidden md:block"/>
+          <img src={logoImage} className="h-10 w-auto object-contain md:hidden py-0"/>
+          
+          <div className="flex gap-6 text-[#1a1a1a] md:text-base lg:text-lg tracking-wide font-cal">
+            {["home", "about", "projects", "artwork"].map(section => (
               <p
                 key={section}
                 onClick={() => {
-                  if (section === "Home") scrollToSection(heroRef, section);
-                  if (section === "About") scrollToSection(aboutRef, section);
-                  if (section === "Projects") scrollToSection(projectsRef, section);
-                  if (section === "Artwork") scrollToSection(artworkRef, section);
+                  if (section === "home") scrollToSection(heroRef, section);
+                  if (section === "about") scrollToSection(aboutRef, section);
+                  if (section === "projects") scrollToSection(projectsRef, section);
+                  if (section === "artwork") scrollToSection(artworkRef, section);
                 }}
-                className={`cursor-pointer hover:text-blue-500 transition ${activeSection === section ? "text-blue-600 font-semibold" : ""}`}
+                className={`cursor-pointer transition relative
+                  hover:navColors[section]
+                  ${activeSection === section ? "after:scale-x-100" : "after:scale-x-0"}
+                  after:content-[''] after:absolute after:left-0 after:-bottom-1
+                  after:h-0.75 after:w-full after:bg-current ${activeSection === section ? navColors[section] : ""}
+                  after:origin-left after:transition-transform after:duration-300
+                `}
               >
                 {section}
               </p>
@@ -105,49 +166,89 @@ export default function App() {
         </div>
       </div>
 
+
+
       {/* HERO */}
-      <div ref={heroRef} className="h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold mb-4">Hi, I'm Sean 👋</h1>
-          <p className="text-lg text-gray-600">I build modern apps & beautiful user experiences.</p>
+      <div ref={heroRef} className="flex flex-col items-center justify-center mb-8">
+
+        <div className="text-center h-70 flex items-center justify-end flex-col">
+          {/* Desktop Image */}
+          <img src={heroTitleText} className="w-10/12 object-cover hidden md:block"/>
+
+          {/* Mobile Image */}
+          <img src={heroTitleTextMobile} className="w-9/12 object-cover md:hidden"/>
         </div>
+
+
+        <div className="flex gap-1">
+          <div className="hidden md:block overflow-hidden opacity-0 translate-y-10 animate-fadeUp flex-3" style={{ animationDelay: "0.3s" }}>
+            <img src={leftHeroImage} className="w-full object-cover" />
+          </div>
+
+          <div className="overflow-hidden opacity-0 translate-y-10 animate-fadeUp flex-1 md:flex-2" style={{ animationDelay: "0.1s" }}>
+            <img src={midHeroImage} className="w-full object-cover" />
+          </div>
+
+          <div className="hidden md:block overflow-hidden opacity-0 translate-y-10 animate-fadeUp flex-3" style={{ animationDelay: "0.6s" }}>
+            <img src={rightHeroImage} className="w-full object-cover" />
+          </div>
+        </div>
+
       </div>
 
-      {/* ABOUT SECTION */}
-      <div ref={aboutRef} className="flex flex-col px-10 py-20 bg-gray-100 gap-10">
 
-        {/* PROFILE + CONTACT */}
+
+      {/* ABOUT */}
+      <div ref={aboutRef} className="flex flex-col px-4 sm:px-8 md:px-16 py-16 md:py-20 gap-10">
         <div className="flex flex-col md:flex-row gap-10">
-          <div className="md:w-4/6 flex flex-col justify-center bg-white p-8 rounded-lg shadow">
-            <h2 className="text-4xl font-bold mb-4">About Me</h2>
-            <p className="text-gray-700 mb-4">Hi, I'm Sean Concepcion, a passionate developer who loves building beautiful and functional applications.</p>
-            <p className="text-gray-700">I enjoy creating interactive user experiences and optimizing applications for performance and accessibility.</p>
+          
+          {/* ABOUT TEXT */}
+          <div className="md:w-5/8 flex flex-col justify-start p-4 md:p-8">
+            <img src={aboutText}  className="h-12 w-auto object-contain block self-start mb-6"/>
+
+            <p className="text-[#1a1a1a] font-nunito text-[clamp(1.1rem,2vw,1.25rem)]" style={{lineHeight: '2.2rem'}}>
+              Sean Kierby Concepcion is a BS Computer Science graduate of UP Los Baños with experience 
+              in mobile and full-stack web development, highlighted by his work as a Mobile App Developer 
+              at BAJ Pharmaceuticals, contributions to a nationwide project (NOAH), and hands-on experience 
+              delivering freelance projects. 
+            </p>
           </div>
-          <div className="md:w-2/6 flex flex-col justify-start bg-white p-8 rounded-lg shadow">
-            <h3 className="text-2xl font-bold mb-4">Contact</h3>
-            <p className="text-gray-700 mb-2">📧 sean@example.com</p>
-            <p className="text-gray-700 mb-2">📱 +63 912 345 6789</p>
-            <p className="text-gray-700 mb-2">💼 LinkedIn</p>
-            <p className="text-gray-700">🐙 GitHub</p>
+
+
+          {/* CONTACTS */}
+          <div className="md:w-3/8 flex flex-col justify-start p-4 md:p-8">
+            <img src={contactsText} className="h-12 w-auto object-contain block self-start mb-6"/>
+
+            <p className="text-[#1a1a1a] mb-2 font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">📧 sean@example.com</p>
+            <p className="text-[#1a1a1a] mb-2 font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">📱 +63 912 345 6789</p>
+            <p className="text-[#1a1a1a] mb-2 font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">💼 LinkedIn</p>
+            <p className="text-[#1a1a1a] font-nunito text-[clamp(1.1rem,2vw,1.25rem)]">🐙 GitHub</p>
           </div>
         </div>
 
-        {/* Programming Icons */}
-        <div className="bg-white p-6 rounded-lg shadow flex flex-wrap gap-6">
-          <SiJavascript className="text-yellow-400 w-10 h-10 hover:scale-110 transition-transform" title="JavaScript" />
-          <SiTypescript className="text-blue-600 w-10 h-10 hover:scale-110 transition-transform" title="TypeScript" />
-          <SiReact className="text-cyan-400 w-10 h-10 hover:scale-110 transition-transform" title="React" />
-          <SiTailwindcss className="text-teal-400 w-10 h-10 hover:scale-110 transition-transform" title="Tailwind CSS" />
-          <SiNodedotjs className="text-green-600 w-10 h-10 hover:scale-110 transition-transform" title="Node.js" />
-          <SiFlutter className="text-blue-500 w-10 h-10 hover:scale-110 transition-transform" title="Flutter" />
+
+        {/* PROFICIENCY */}
+        <div className="flex flex-col justify-start p-4 md:p-8">
+          <img src={proficiencyText} className="h-12 w-auto object-contain block self-start mb-6"/>
+
+          <div className="flex flex-wrap gap-6">
+            <SiJavascript className="text-yellow-400 w-12 h-12 hover:scale-110 transition-transform" />
+            <SiTypescript className="text-blue-600 w-12 h-12 hover:scale-110 transition-transform" />
+            <SiReact className="text-cyan-400 w-12 h-12 hover:scale-110 transition-transform" />
+            <SiTailwindcss className="text-teal-400 w-12 h-12 hover:scale-110 transition-transform" />
+            <SiNodedotjs className="text-green-600 w-12 h-12 hover:scale-110 transition-transform" />
+            <SiFlutter className="text-blue-500 w-12 h-12 hover:scale-110 transition-transform" />
+          </div>
         </div>
       </div>
 
-      {/* PROJECTS / CARDS SECTION */}
+
+
+
+      {/* PROJECTS */}
       <div ref={projectsRef} className="px-10 py-20 flex flex-col gap-10">
         <h2 className="text-4xl font-bold text-center">My Work</h2>
 
-        {/* Tabs */}
         <div className="flex justify-center gap-6 mt-4">
           {tabs.map(tab => (
             <button
@@ -161,7 +262,6 @@ export default function App() {
           ))}
         </div>
 
-        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {filteredProjects.map((p, idx) => (
             <Card key={idx} image={p.image} title={p.title} subtitle={p.subtitle} />
@@ -169,32 +269,25 @@ export default function App() {
         </div>
       </div>
 
-      {/* ARTWORK SECTION */}
+      {/* ARTWORK */}
       <div ref={artworkRef} className="px-10 py-20 flex flex-col gap-10 bg-gray-50">
         <h2 className="text-4xl font-bold text-center">Artwork</h2>
 
-        {/* Bento-style grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-auto mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
           {artworkImages.map((art, idx) => (
             <div
               key={idx}
               className={`overflow-hidden rounded-lg
-                ${art.colSpan ? `md:col-span-${art.colSpan}` : "md:col-span-1"}
-                ${art.rowSpan ? `md:row-span-${art.rowSpan}` : "md:row-span-1"}`}
+                ${art.colSpan ? `md:col-span-${art.colSpan}` : ""}
+                ${art.rowSpan ? `md:row-span-${art.rowSpan}` : ""}`}
             >
-              <img
-                src={art.src}
-                alt={art.title ?? `Artwork ${idx}`}
-                className="w-full h-full object-cover hover:scale-105 transition-transform"
-              />
+              <img src={art.src} className="w-full h-full object-cover hover:scale-105 transition-transform" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* EXTRA CONTENT */}
       <div className="h-[50vh] bg-white"></div>
-
     </div>
   );
 }
