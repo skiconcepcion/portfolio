@@ -19,6 +19,7 @@ import contactsText from './assets/images/contacts.png';
 import proficiencyText from './assets/images/proficiency.png';
 
 import projectsText from './assets/images/projects.png';
+import artworksText from './assets/images/artworks.png';
 
 import boatsImage from './assets/images/boats.png';
 import ncnpImage from './assets/images/ncnp.png';
@@ -29,7 +30,12 @@ import roambaImage from './assets/images/roamba.png';
 import firstraiderImage from './assets/images/firstraider.png';
 import mbmbImage from './assets/images/mbmb.png';
 
-// Card props interface
+import artOne from './assets/images/art_entropy.jpg';
+import artTwo from './assets/images/art_1314.jpg';
+import artThree from './assets/images/art_mirasol.jpg';
+import artFour from './assets/images/art_self_portrait.png';
+
+
 interface CardProps {
   image: string;
   title: string;
@@ -37,30 +43,32 @@ interface CardProps {
   category?: string;
 }
 
-// Artwork image interface
+
 interface Artwork {
   src: string;
-  title?: string;
-  colSpan?: number;
-  rowSpan?: number;
+  title: string;
+  subtitle: string;
 }
-
 
 
 function Card({ image, title, subtitle }: CardProps) {
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden flex flex-col">
-      <img src={image} alt={title} className="w-full h-70 object-cover" />
+    <div className="bg-white rounded-lg shadow-xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:scale-[1.015] cursor-pointer">
+      <img src={image} alt={title} className="w-full h-70 object-cover"/>
+
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-bold text-xl mb-2">{title}</h3>
-        <p className="text-gray-700 flex-1">{subtitle}</p>
+        <h3 className="font-cal font-medium text-2xl mb-2 text-[#3d3d3d]">
+          {title}
+        </h3>
+
+        <p className="font-nunito font-medium text-lg flex-1 text-[#3d3d3d]">
+          {subtitle}
+        </p>
       </div>
     </div>
   );
 }
 
-
-// Main App
 export default function App() {
   const [showNav, setShowNav] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -77,7 +85,7 @@ export default function App() {
     home: "text-[#6BDEEC]",
     about: "text-[#C5DFAB]",
     projects:"text-[#FECE54]",
-    artwork: "text-[#F477A0]",
+    artworks: "text-[#F477A0]",
   };
 
 
@@ -123,15 +131,14 @@ export default function App() {
   };
 
   const projects: CardProps[] = [
-    { image: ncnpImage, title: "Mobile App One", subtitle: "A mobile app project.", category: "Mobile App" },
-    { image: boatsImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: artisanImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: healthmonImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: slImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: mbmbImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: roambaImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: firstraiderImage, title: "Website One", subtitle: "A website project.", category: "Website" },
-    { image: "https://via.placeholder.com/400x200", title: "Game One", subtitle: "A video game project.", category: "Video Game" },
+    { image: ncnpImage, title: "Nor Crying, Nor Pain", subtitle: "Nor Crying, Nor Pain or NCNP is a personal project on a 2D side-scroller puzzle game made using personally drawn assets and Godot Engine. It follows the story of a reporter investigating a peculiar election process on a secluded village where the protagonist must navigate through the area and use the environment to solve puzzles and escape the eldtrich horror that lies within.", category: "Video Game" },
+    { image: boatsImage, title: "BOATS (Boat in Ocean: Animation and Terrain Simulation)", subtitle: "Boat in Ocean - Animation and Terrain Simulation” or “BOATS” is an interactive simulation highlighting WebGL capabilities to render animations and objects.", category: "Website" },
+    { image: artisanImage, title: "ARTISAN", subtitle: "ARTISAN (Accessible Routing and Topology Interactive Simulation for Applied Networking) is a mobile application for simulating and visualizing computer networks which seeks to provide better accessibility to networking tools that were once bound to desktops only.", category: "Mobile App" },
+    { image: healthmonImage, title: "HealthMon: Health Monitoring Mobile Application", subtitle: "HealthMon is a health monitoring system application created using the Flutter framework which is connected to a Firebase Cloud Firestore for database and Firebase Authentication for the login and signup features.", category: "Mobile App" },
+    { image: slImage, title: "Sa 'yo, Luna", subtitle: "Sa 'yo, Luna is a personal project for a 2D puzzle-exploration short game (about 15 to 30 minutes of gameplay), created using personally drawn assets and the Godot Engine. This is a heartfelt letter the follows the story of two lovers told from one perspective.", category: "Video Game" },
+    { image: mbmbImage, title: "Monster Beside My Bed", subtitle: "Monster Beside My Bed is a personal project on a 2D side-scroller puzzle game made using personally drawn assets and Godot Engine. It follows the story of a girl and a certain creature beside her bed that must be fed each night at certain specific time.", category: "Video Game" },
+    { image: roambaImage, title: "Roamba: Sensor-Based Debris Sweeping Robot", subtitle: "Roamba is a compact sweeping robot engineered to push light-to-medium debris such as rocks into room corners using a hybrid of LEGO Mindstorms EV3 and Tetrix components. Equipped with ultrasonic and gyro sensors for precise movement, it offers reliable performance with room for future upgrades.", category: "Other" },
+    { image: firstraiderImage, title: "FirstRaider", subtitle: "First Raider is a freelance mobile application prototype that works for Android and IOS designed to improve first aid response through a grab-like system which allows nearby respondents to attend to the emergency quickly.", category: "Mobile App" },
   ];
 
   const filteredProjects = activeTab === "All"
@@ -139,15 +146,13 @@ export default function App() {
     : projects.filter(p => p.category === activeTab);
 
   const artworkImages: Artwork[] = [
-    { src: "https://via.placeholder.com/600x400", colSpan: 2, rowSpan: 3 },
-    { src: "https://via.placeholder.com/400x400", colSpan: 1, rowSpan: 1 },
-    { src: "https://via.placeholder.com/800x400", colSpan: 2, rowSpan: 1 },
-    { src: "https://via.placeholder.com/400x600", colSpan: 1, rowSpan: 2 },
-    { src: "https://via.placeholder.com/600x600", colSpan: 2, rowSpan: 2 },
-    { src: "https://via.placeholder.com/500x400", colSpan: 1, rowSpan: 1 },
+    { src: artOne, title: "Entropy", subtitle: "gradual decline into disorder" },
+    { src: artThree, title: "Mirasol", subtitle: "padayon, iska" },
+    { src: artTwo, title: "13, 14", subtitle: "somebody that i used to know" },
+    { src: artFour, title: "Self Portrait", subtitle: "literaly me" }
   ];
 
-  const tabs = ["All", "Mobile App", "Website", "Video Game"];
+  const tabs = ["All", "Mobile App", "Website", "Video Game", "Other"];
 
 
   return (
@@ -164,14 +169,14 @@ export default function App() {
           <img src={logoImage} className="h-6 w-auto object-contain md:hidden py-0"/>
           
           <div className="flex gap-6 text-[#3d3d3d] md:text-base lg:text-lg tracking-wide font-cal">
-            {["home", "about", "projects", "artwork"].map(section => (
+            {["home", "about", "projects", "artworks"].map(section => (
               <p
                 key={section}
                 onClick={() => {
                   if (section === "home") scrollToSection(heroRef, section);
                   if (section === "about") scrollToSection(aboutRef, section);
                   if (section === "projects") scrollToSection(projectsRef, section);
-                  if (section === "artwork") scrollToSection(artworkRef, section);
+                  if (section === "artworks") scrollToSection(artworkRef, section);
                 }}
                 className={`cursor-pointer transition relative
                   hover:navColors[section]
@@ -318,15 +323,15 @@ export default function App() {
 
 
       {/* PROJECTS */}
-      <div ref={projectsRef} className="px-10 py-20 flex flex-col gap-10 bg-gray-50">
-        <img src={projectsText} className="h-24 w-auto object-contain block self-center mb-8"/>
+      <div ref={projectsRef} className="px-10 py-20 flex flex-col gap-10 bg-gray-0">
+        <img src={projectsText} className="h-24 w-auto object-contain block self-center mb-0"/>
 
-        <div className="flex justify-center gap-6 mt-4">
+        <div className="flex justify-center gap-4 mt-0">
           {tabs.map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-lg font-semibold transition text-[#3d3d3d] ${
+              className={`px-4 py-2 rounded-lg transition text-[#3d3d3d] font-normal font-cal text-xl ${
                 activeTab === tab
                   ? tab === "All"
                     ? "bg-[#6BDEEC]"
@@ -336,6 +341,8 @@ export default function App() {
                     ? "bg-[#FECE54]"
                     : tab === "Video Game"
                     ? "bg-[#F477A0]"
+                    : tab === "Other"
+                    ? "bg-[#8a9df1]"
                     : ""
                   : "bg-white"
               }`}
@@ -345,7 +352,7 @@ export default function App() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
           {filteredProjects.map((p, idx) => (
             <Card key={idx} image={p.image} title={p.title} subtitle={p.subtitle} />
           ))}
@@ -358,23 +365,40 @@ export default function App() {
 
       {/* ARTWORK */}
       <div ref={artworkRef} className="px-10 py-20 flex flex-col gap-10">
-        <h2 className="text-4xl font-bold text-center">Artwork</h2>
+        <img src={artworksText} className="h-20 w-auto object-contain block self-center mb-0"/>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-          {artworkImages.map((art, idx) => (
-            <div
-              key={idx}
-              className={`overflow-hidden rounded-lg
-                ${art.colSpan ? `md:col-span-${art.colSpan}` : ""}
-                ${art.rowSpan ? `md:row-span-${art.rowSpan}` : ""}`}
-            >
-              <img src={art.src} className="w-full h-full object-cover hover:scale-105 transition-transform" />
-            </div>
-          ))}
-        </div>
-      </div>
+          {artworkImages.map((art, idx) => {
+            return (
+              <div
+                key={idx}
+                className="group relative overflow-hidden rounded-2xl cursor-pointer aspect-4/5"
+              >
+                {/* IMAGE */}
+                <img
+                  src={art.src}
+                  className="w-full h-full object-cover transition duration-500"
+                />
 
-      <div className="h-[50vh] bg-white"></div>
+                {/* DARK OVERLAY */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition duration-500" />
+
+                {/* TEXT */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition duration-500 translate-y-4 group-hover:translate-y-0">
+                  <h3 className="text-white font-cal text-2xl md:text-3xl">
+                    {art.title}
+                  </h3>
+
+                  <p className="text-white/80 font-nunito text-base md:text-lg">
+                    {art.subtitle}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
     </div>
   );
 }
