@@ -18,9 +18,16 @@ import aboutText from './assets/images/about-me.png';
 import contactsText from './assets/images/contacts.png';
 import proficiencyText from './assets/images/proficiency.png';
 
+import projectsText from './assets/images/projects.png';
+
 import boatsImage from './assets/images/boats.png';
-
-
+import ncnpImage from './assets/images/ncnp.png';
+import artisanImage from './assets/images/artisan.png';
+import healthmonImage from './assets/images/healthmon.png';
+import slImage from './assets/images/sl.png';
+import roambaImage from './assets/images/roamba.png';
+import firstraiderImage from './assets/images/firstraider.png';
+import mbmbImage from './assets/images/mbmb.png';
 
 // Card props interface
 interface CardProps {
@@ -43,8 +50,8 @@ interface Artwork {
 function Card({ image, title, subtitle }: CardProps) {
   return (
     <div className="bg-white rounded-lg shadow overflow-hidden flex flex-col">
-      <img src={image} alt={title} className="w-full h-40 object-cover" />
-      <div className="p-6 flex flex-col flex-1">
+      <img src={image} alt={title} className="w-full h-70 object-cover" />
+      <div className="p-5 flex flex-col flex-1">
         <h3 className="font-bold text-xl mb-2">{title}</h3>
         <p className="text-gray-700 flex-1">{subtitle}</p>
       </div>
@@ -72,6 +79,7 @@ export default function App() {
     projects:"text-[#FECE54]",
     artwork: "text-[#F477A0]",
   };
+
 
   // 🔥 Scroll direction logic
   useEffect(() => {
@@ -115,8 +123,14 @@ export default function App() {
   };
 
   const projects: CardProps[] = [
-    { image: "https://via.placeholder.com/400x200", title: "Mobile App One", subtitle: "A mobile app project.", category: "Mobile App" },
+    { image: ncnpImage, title: "Mobile App One", subtitle: "A mobile app project.", category: "Mobile App" },
     { image: boatsImage, title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: artisanImage, title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: healthmonImage, title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: slImage, title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: mbmbImage, title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: roambaImage, title: "Website One", subtitle: "A website project.", category: "Website" },
+    { image: firstraiderImage, title: "Website One", subtitle: "A website project.", category: "Website" },
     { image: "https://via.placeholder.com/400x200", title: "Game One", subtitle: "A video game project.", category: "Video Game" },
   ];
 
@@ -134,6 +148,7 @@ export default function App() {
   ];
 
   const tabs = ["All", "Mobile App", "Website", "Video Game"];
+
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -189,15 +204,15 @@ export default function App() {
 
         <div className="flex gap-1">
           <div className="hidden md:block overflow-hidden opacity-0 translate-y-10 animate-fadeUp flex-3" style={{ animationDelay: "0.3s" }}>
-            <img src={leftHeroImage} className="w-full object-cover" />
+            <img src={leftHeroImage} loading="lazy" className="w-full object-cover" />
           </div>
 
           <div className="overflow-hidden opacity-0 translate-y-10 animate-fadeUp flex-1 md:flex-2" style={{ animationDelay: "0.1s" }}>
-            <img src={midHeroImage} className="w-full object-cover" />
+            <img src={midHeroImage} loading="lazy" className="w-full object-cover" />
           </div>
 
           <div className="hidden md:block overflow-hidden opacity-0 translate-y-10 animate-fadeUp flex-3" style={{ animationDelay: "0.6s" }}>
-            <img src={rightHeroImage} className="w-full object-cover" />
+            <img src={rightHeroImage} loading="lazy" className="w-full object-cover" />
           </div>
         </div>
 
@@ -304,15 +319,26 @@ export default function App() {
 
       {/* PROJECTS */}
       <div ref={projectsRef} className="px-10 py-20 flex flex-col gap-10 bg-gray-50">
-        <h2 className="text-4xl font-bold text-center">My Work</h2>
+        <img src={projectsText} className="h-24 w-auto object-contain block self-center mb-8"/>
 
         <div className="flex justify-center gap-6 mt-4">
           {tabs.map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-lg font-semibold transition
-                ${activeTab === tab ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+              className={`px-4 py-2 rounded-lg font-semibold transition text-[#3d3d3d] ${
+                activeTab === tab
+                  ? tab === "All"
+                    ? "bg-[#6BDEEC]"
+                    : tab === "Mobile App"
+                    ? "bg-[#C5DFAB]"
+                    : tab === "Website"
+                    ? "bg-[#FECE54]"
+                    : tab === "Video Game"
+                    ? "bg-[#F477A0]"
+                    : ""
+                  : "bg-white"
+              }`}
             >
               {tab}
             </button>
