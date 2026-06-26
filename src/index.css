@@ -1,12 +1,27 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "MyFont";
+  font-family: "GoogleSans";
   src: url("./assets/fonts/google-sans.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: "AlienBlock";
+  src: url("./assets/fonts/alien-block.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: "MyFont", sans-serif;
+  font-family: "GoogleSans", sans-serif;
+}
+
+.title {
+  font-family: "AlienBlock", sans-serif;
+}
+
+.text {
+  font-family: "GoogleSans", sans-serif;
 }
