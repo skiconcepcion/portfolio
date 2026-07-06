@@ -10,17 +10,60 @@ export default function ProjectCard({ project }) {
       </div>
 
       <div className="p-6">
-        <h3 className="text-2xl font-bold">
-          {project.title}
-        </h3>
+        <h3 className="text-2xl font-bold">{project.title}</h3>
 
-        <span className="mt-2 inline-block rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-700">
-          {project.label}
-        </span>
+        {/* Badges */}
+        <div className="mt-2 flex flex-wrap gap-2">
+          <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
+            {project.type}
+          </span>
 
-        <p className="mt-4 text-gray-600">
+          <span className="rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700">
+            {project.purpose}
+          </span>
+        </div>
+
+        <p className="mt-4 mb-2 text-gray-600">
           {project.description}
         </p>
+
+
+
+        {/* Links */}
+        {(project.githubLink || project.projectLink) && (
+          <div>
+            <p className="mt-5 text-sm font-medium">
+              Click here to:
+            </p>
+
+            <div className="mt-1 flex flex-wrap gap-4 text-sm font-medium">
+            
+              {/* GitHub Link */}
+              {project.githubLink && (
+                <a
+                  href={project.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-700 underline decoration-gray-400 underline-offset-4 transition hover:text-black"
+                >
+                  Visit Github Repository
+                </a>
+              )}
+
+              {/* Project / Live Link */}
+              {project.projectLink && (
+                <a
+                  href={project.projectLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline decoration-blue-400 underline-offset-4 transition hover:text-blue-800"
+                >
+                  {project.linkLabel || "Access Project"}
+                </a>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

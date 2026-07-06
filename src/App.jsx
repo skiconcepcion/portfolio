@@ -11,35 +11,26 @@ import ProjectCard from "./components/ProjectCard";
 export default function App() {
 
   const [showNavbar, setShowNavbar] = useState(true);
+  const [selectedType, setSelectedType] = useState("All");
+
   const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (
-        window.scrollY > lastScrollY.current &&
-        window.scrollY > 80
-      ) {
-        setShowNavbar(false);
-      } else {
-        setShowNavbar(true);
-      }
-
+      (window.scrollY > lastScrollY.current && window.scrollY > 80) ? setShowNavbar(false) : setShowNavbar(true); 
       lastScrollY.current = window.scrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
 
-  const featuredProjects = projects.filter(
-    (project) => project.featured
-  );
+  const featuredProjects = projects.filter((project) => project.featured);
+  const filteredProjects = selectedType === "All" ? projects : projects.filter((project) => project.type === selectedType);
 
+  const types = ["All", ...new Set(projects.map((project) => project.type))];
 
-
-  
 
   return (
     <div className="bg-white pt-16">
@@ -52,18 +43,10 @@ export default function App() {
             <img src={logo} alt="Logo" className="h-8 w-auto"/>
 
             <div className="gap-4 md:gap-6 flex">
-              <a href="#" className="text-gray-600 hover:text-black">
-                home
-              </a>
-              <a href="#" className="text-gray-600 hover:text-black">
-                projects
-              </a>
-              <a href="#" className="text-gray-600 hover:text-black">
-                artworks
-              </a>
-              <a href="#" className="text-gray-600 hover:text-black">
-                about
-              </a>
+              <a href="#" className="text-gray-600 hover:text-black"> home </a>
+              <a href="#" className="text-gray-600 hover:text-black"> projects </a>
+              <a href="#" className="text-gray-600 hover:text-black"> artworks </a>
+              <a href="#" className="text-gray-600 hover:text-black"> about </a>
             </div>
 
           </div>
@@ -77,11 +60,11 @@ export default function App() {
           {/* Hero */}
           <div className="mb-16">
             <h2 className="text-5xl font-bold md:text-7xl">
-              Welcome to My Portfolio
+              skiconcepcion portfolio
             </h2>
 
-            <p className="mt-4 max-w-3xl text-gray-600 text-lg">
-              a simple responsive React + Tailwind portfolio showcasing projects, artwork, and experiments.
+            <p className="mt-4 max-w-3xl text-gray-600 text-xl">
+              a collection of projects, ideas, and experiences built through curiosity and creativity.
             </p>
           </div>
 
@@ -93,11 +76,7 @@ export default function App() {
 
             <div className="grid gap-6 md:grid-cols-2">
               {featuredProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  featured
-                />
+                <ProjectCard key={project.id}  project={project} featured/>
               ))}
             </div>
           </div>
@@ -105,29 +84,49 @@ export default function App() {
         </div>
       </section>
 
-      {/* All Works */}
-      <section className="px-4 py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10">
-            <h2 className="text-4xl font-bold">
-              All Works
-            </h2>
+{/* All Works */}
+<section className="px-4 py-16">
+  <div className="mx-auto max-w-7xl">
 
-            <p className="mt-2 text-gray-600">
-              Browse my complete collection of projects.
-            </p>
-          </div>
+    <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      {/* Left */}
+      <div>
+        <h2 className="text-4xl font-bold">
+          All Works
+        </h2>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+        <p className="mt-2 text-gray-600">
+          Browse my complete collection of projects.
+        </p>
+      </div>
+
+      {/* Right - Type Filter */}
+      <div className="flex flex-wrap gap-2">
+        {types.map((type) => (
+          <button
+            key={type}
+            onClick={() => setSelectedType(type)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              selectedType === type
+                ? "bg-blue-600 text-white"
+                : "border border-gray-300 hover:border-blue-600 hover:text-blue-600"
+            }`}
+          >
+            {type}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {filteredProjects.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))}
+    </div>
+
+  </div>
+</section>
+
     </div>
   );
 }
