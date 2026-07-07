@@ -14,16 +14,16 @@ export default function ProjectCard({ project }) {
 
         {/* Badges */}
         <div className="mt-2 flex flex-wrap gap-2">
-          <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
+          <span className="rounded-md bg-[var(--secondary)] px-4 py-1 text-sm font-medium text-white">
             {project.type}
           </span>
 
-          <span className="rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700">
+          <span className="rounded-md bg-[var(--tertiary)] px-4 py-1 text-sm font-medium text-white">
             {project.purpose}
           </span>
         </div>
 
-        <p className="mt-4 mb-2 text-gray-600">
+        <p className="mt-4 mb-2 text-md">
           {project.description}
         </p>
 
@@ -31,37 +31,32 @@ export default function ProjectCard({ project }) {
 
         {/* Links */}
         {(project.githubLink || project.projectLink) && (
-          <div>
-            <p className="mt-5 text-sm font-medium">
-              Click here to:
-            </p>
+          <div className="mt-7 mb-2 flex flex-wrap gap-3 text-sm">
+            <p className=""> Click here to: </p>
+          
+            {/* GitHub Link */}
+            {project.githubLink && (
+              <a
+                href={project.githubLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-[var(--primary)] transition hover:text-[var(--primary-light)]"
+              >
+                Visit Github Repository
+              </a>
+            )}
 
-            <div className="mt-1 flex flex-wrap gap-4 text-sm font-medium">
-            
-              {/* GitHub Link */}
-              {project.githubLink && (
-                <a
-                  href={project.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-700 underline decoration-gray-400 underline-offset-4 transition hover:text-black"
-                >
-                  Visit Github Repository
-                </a>
-              )}
-
-              {/* Project / Live Link */}
-              {project.projectLink && (
-                <a
-                  href={project.projectLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline decoration-blue-400 underline-offset-4 transition hover:text-blue-800"
-                >
-                  {project.linkLabel || "Access Project"}
-                </a>
-              )}
-            </div>
+            {/* Project / Live Link */}
+            {project.projectLink && (
+              <a
+                href={project.projectLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-[var(--primary)] transition hover:text-[var(--primary-light)]"
+              >
+                {project.linkLabel || "Access Project"}
+              </a>
+            )}
           </div>
         )}
       </div>

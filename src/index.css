@@ -14,6 +14,22 @@
   font-style: normal;
 }
 
+
+:root {
+  --background: #ffffff;
+  --text: #02000D;
+  --text-sub: #505050;
+
+  --primary: #465C7A;
+  --secondary: #D9727F;
+  --tertiary: #FCBB6D;
+
+  --primary-light: #465c7a40;
+  --secondary-light: #d9727f40;
+  --tertiary-light: #fcbd6d40;
+}
+
+
 body {
   font-family: "GoogleSans", sans-serif;
 }
