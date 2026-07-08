@@ -211,7 +211,7 @@ export default function App() {
               </h3>
 
               <p className="text-md leading-7">
-                Sean Kierby Concepcion is a BS Computer Science graduate of UP Los Baños with experience in mobile and full-stack web development, highlighted by his work as a Mobile App Developer at BAJ Pharmaceuticals, contributions to a nationwide project (NOAH), and hands-on experience delivering freelance projects.
+                Sean Concepcion is a BS Computer Science graduate of UP Los Baños with experience in mobile and full-stack web development, highlighted by his work as a Mobile App Developer at BAJ Pharmaceuticals, contributions to a nationwide project (NOAH), and hands-on experience delivering freelance projects.
               </p>
             </div>
 
