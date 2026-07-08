@@ -14,12 +14,16 @@ export default function ProjectCard({ project }) {
 
         {/* Badges */}
         <div className="mt-2 flex flex-wrap gap-2">
-          <span className="rounded-md bg-[var(--secondary)] px-4 py-1 text-sm font-medium text-white">
+          <span className="rounded-md bg-[var(--primary)] px-3 md:px-4 py-1 text-sm font-medium text-white lowercase">
             {project.type}
           </span>
 
-          <span className="rounded-md bg-[var(--tertiary)] px-4 py-1 text-sm font-medium text-white">
+          <span className="rounded-md bg-[var(--secondary)] px-3 md:px-4 py-1 text-sm font-medium text-white lowercase">
             {project.purpose}
+          </span>
+
+          <span className="rounded-md bg-[var(--tertiary)] px-3 md:px-4 py-1 text-sm font-medium text-white lowercase">
+            {project.progress}
           </span>
         </div>
 

@@ -29,6 +29,10 @@
   --tertiary-light: #fcbd6d40;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 
 body {
   font-family: "GoogleSans", sans-serif;
@@ -40,4 +44,20 @@ body {
 
 .text {
   font-family: "GoogleSans", sans-serif;
+}
+
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 80s linear infinite;
 }
