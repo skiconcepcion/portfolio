@@ -25,19 +25,19 @@ const projects = [
     linkLabel: "Access APK & docs",
   },
 
-  {
-    id: 2,
-    title: "BOATS (Boat in Ocean: Animation and Terrain Simulation)",
-    type: "Website",
-    purpose: "Academic Project",
-    progress: "Completed",
-    description: "An interactive WebGL-based website that demonstrates 3D animation and terrain rendering, focusing on real-time graphics and visual simulation techniques.",
-    image: boats,
-    featured: false,
-    githubLink: "https://github.com/SeanConcepcion29/CMSC-161-BOATS",
-    projectLink: "https://seanconcepcion29.github.io/CMSC-161-BOATS/",
-    linkLabel: "Visit website",
-  },
+  // {
+  //   id: 2,
+  //   title: "BOATS (Boat in Ocean: Animation and Terrain Simulation)",
+  //   type: "Website",
+  //   purpose: "Academic Project",
+  //   progress: "Completed",
+  //   description: "An interactive WebGL-based website that demonstrates 3D animation and terrain rendering, focusing on real-time graphics and visual simulation techniques.",
+  //   image: boats,
+  //   featured: false,
+  //   githubLink: "https://github.com/SeanConcepcion29/CMSC-161-BOATS",
+  //   projectLink: "https://seanconcepcion29.github.io/CMSC-161-BOATS/",
+  //   linkLabel: "Visit website",
+  // },
 
   {
     id: 3,
@@ -126,7 +126,7 @@ const projects = [
   {
     id: 9,
     title: "Doctor's Portal",
-    type: "Website",
+    type: "Mobile Application",
     purpose: "Professional Project",
     progress: "In Progress",
     description: "Doctor’s Portal is designed to digitize patient records and laboratory request management, providing doctors with fast, secure, and efficient access to healthcare information.",

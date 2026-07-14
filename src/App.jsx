@@ -251,7 +251,7 @@ export default function App() {
 
 
             {/* TIMELINE */}
-            <div className="py-2 md:col-span-2">
+            {/* <div className="py-2 md:col-span-2">
               <h3 className="mb-4 text-2xl font-semibold text-[var(--tertiary)]">
                 timeline
               </h3>
@@ -265,7 +265,8 @@ export default function App() {
                   />
                 ))}
               </div>
-            </div>
+            </div> */}
+            
           </div>
           
         </div>
